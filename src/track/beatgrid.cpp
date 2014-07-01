@@ -231,7 +231,11 @@ int BeatGrid::getBeatNumber(double dSamples) const {
     double root = m_grid.root_beat().frame_position();
     if (root > 0) {
         double difference = dSamples - m_grid.root_beat().frame_position();
-        return (int)(difference / m_dBeatLength + 0.5);
+        double beatnum = difference / m_dBeatLength;
+        if (beatnum < 0.0)
+          return (int)(beatnum-0.5);
+        else
+          return (int)(beatnum+0.5);
     }
 
     return -1;
