@@ -20,6 +20,8 @@ class WaveformRenderBeat : public WaveformRendererAbstract {
 
   private:
     QColor m_beatColor;
+    QColor m_beatColor4;
+    QColor m_beatColor16;
     ControlObjectThread* m_pBeatActive;
     QVector<QLineF> m_beats;
 

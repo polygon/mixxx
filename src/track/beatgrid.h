@@ -29,7 +29,7 @@ class BeatGrid : public QObject, public virtual Beats {
     // comments in beats.h
 
     virtual Beats::CapabilitiesFlags getCapabilities() const {
-        return BEATSCAP_TRANSLATE | BEATSCAP_SCALE | BEATSCAP_SET;
+        return BEATSCAP_TRANSLATE | BEATSCAP_SCALE | BEATSCAP_SET | BEATSCAP_ROOT;
     }
 
     virtual QByteArray* toByteArray() const;
@@ -49,6 +49,7 @@ class BeatGrid : public QObject, public virtual Beats {
     virtual bool hasBeatInRange(double startSample, double stopSample) const;
     virtual double getBpm() const;
     virtual double getBpmRange(double startSample, double stopSample) const;
+    virtual int getBeatNumber(double dSamples) const;
 
     ////////////////////////////////////////////////////////////////////////////
     // Beat mutations
@@ -60,6 +61,7 @@ class BeatGrid : public QObject, public virtual Beats {
     virtual void translate(double dNumSamples);
     virtual void scale(double dScalePercentage);
     virtual void setBpm(double dBpm);
+    virtual void setRoot(double dBeatSample);
 
   signals:
     void updated();

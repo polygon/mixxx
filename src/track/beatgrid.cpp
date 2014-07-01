@@ -227,6 +227,16 @@ double BeatGrid::getBpmRange(double startSample, double stopSample) const {
     return bpm();
 }
 
+int BeatGrid::getBeatNumber(double dSamples) const {
+    double root = m_grid.root_beat().frame_position();
+    if (root > 0) {
+        double difference = dSamples - m_grid.root_beat().frame_position();
+        return (int)(difference / m_dBeatLength + 0.5);
+    }
+
+    return -1;
+}
+
 void BeatGrid::addBeat(double dBeatSample) {
     Q_UNUSED(dBeatSample);
     //QMutexLocker locker(&m_mutex);
@@ -273,6 +283,15 @@ void BeatGrid::setBpm(double dBpm) {
     QMutexLocker locker(&m_mutex);
     m_grid.mutable_bpm()->set_bpm(dBpm);
     m_dBeatLength = (60.0 * m_iSampleRate / dBpm) * kFrameSize;
+    locker.unlock();
+    emit(updated());
+}
+
+void BeatGrid::setRoot(double dBeatSample) {
+    QMutexLocker locker(&m_mutex);
+    double closest = findClosestBeat(dBeatSample);
+    if (closest != -1)
+        m_grid.mutable_root_beat()->set_frame_position(closest);
     locker.unlock();
     emit(updated());
 }

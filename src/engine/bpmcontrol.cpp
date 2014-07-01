@@ -686,6 +686,7 @@ void BpmControl::slotBeatsTranslate(double v) {
             delta--;
         }
         m_pBeats->translate(delta);
+        m_pBeats->setRoot(currentSample);
     }
 }
 

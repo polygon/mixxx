@@ -19,7 +19,7 @@ class BeatIterator {
 // Beats is a pure abstract base class for BPM and beat management classes. It
 // provides a specification of all methods a beat-manager class must provide, as
 // well as a capability model for representing optional features.
-class Beats {
+class  Beats {
   public:
     Beats() { }
     virtual ~Beats() { }
@@ -30,7 +30,8 @@ class Beats {
         BEATSCAP_TRANSLATE     = 0x0002,
         BEATSCAP_SCALE         = 0x0004,
         BEATSCAP_MOVEBEAT      = 0x0008,
-        BEATSCAP_SET           = 0x0010
+        BEATSCAP_SET           = 0x0010,
+        BEATSCAP_ROOT          = 0x0020,
     };
     typedef int CapabilitiesFlags; // Allows us to do ORing
 
@@ -89,6 +90,9 @@ class Beats {
     // specified in samples if the BPM is valid, otherwise returns -1
     virtual double getBpmRange(double startSample, double stopSample) const = 0;
 
+    // Return the beat number relative to the root beat
+    virtual int getBeatNumber(double dSamples) const = 0;
+
     ////////////////////////////////////////////////////////////////////////////
     // Beat mutations
     ////////////////////////////////////////////////////////////////////////////
@@ -113,6 +117,9 @@ class Beats {
     // Adjust the beats so the global average BPM matches dBpm. Beats class must
     // have the capability BEATSCAP_SET.
     virtual void setBpm(double dBpm) = 0;
+
+    // Set root beat. Beats class must have the capability BEATSCAP_ROOT
+    virtual void setRoot(double dBeatSample) = 0;
 };
 
 #endif /* BEATS_H */

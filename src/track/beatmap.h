@@ -53,6 +53,7 @@ class BeatMap : public QObject, public Beats {
 
     virtual double getBpm() const;
     virtual double getBpmRange(double startSample, double stopSample) const;
+    virtual int getBeatNumber(double dSamples) const {};
 
     ////////////////////////////////////////////////////////////////////////////
     // Beat mutations
@@ -64,6 +65,7 @@ class BeatMap : public QObject, public Beats {
     virtual void translate(double dNumSamples);
     virtual void scale(double dScalePercentage);
     virtual void setBpm(double dBpm);
+    virtual void setRoot(double v) {};
 
   signals:
     void updated();

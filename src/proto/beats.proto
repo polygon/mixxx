@@ -26,4 +26,5 @@ message BeatMap {
 message BeatGrid {
   optional Bpm bpm = 1;
   optional Beat first_beat = 2;
+  optional Beat root_beat = 3;
 }
